@@ -1,9 +1,10 @@
 package com.example.crm.settings.dao;
 
 import com.example.crm.settings.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface UserDao {
-    List<User> selectAll();
+    User login(@Param("loginAct") String loginAct, @Param("loginPwd") String loginPwd);
 }

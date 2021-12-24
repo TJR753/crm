@@ -153,9 +153,12 @@
       <artifactId>commons-io</artifactId>
       <version>${commons-io-version}</version>
     </dependency>
-<!--    jquery-->
-<!--    bootstrap-->
-
+<!--    spring-test-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
 </dependencies>
 
   <build>

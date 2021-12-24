@@ -15,7 +15,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
 <!--    加载spring配置文件-->
@@ -35,18 +35,29 @@
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
-<!--        <init-param>-->
-<!--            <param-name>forceRequestEncoding</param-name>-->
-<!--            <param-value>true</param-value>-->
-<!--        </init-param>-->
-<!--        <init-param>-->
-<!--            <param-name>forceResponseEncoding</param-name>-->
-<!--            <param-value>true</param-value>-->
-<!--        </init-param>-->
+        <init-param>
+            <param-name>forceRequestEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceResponseEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+<!--    登录认证过滤-->
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.example.crm.settings.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
 
 </web-app>
