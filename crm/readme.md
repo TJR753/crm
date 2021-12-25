@@ -1,4 +1,12 @@
-1. 登录功能
+http://127.0.0.1:8080/crm/login.jsp
+1. 关键字
+    * add/create：跳转到添加页
+    * save：执行添加操作
+    * edit：跳转到修改页，或者打开修改的模态窗口
+    * update：修改操作
+    * get：查询操作
+    * 特殊操作：login，登录
+2. 登录功能
     * 验证账号密码
     select \* from tbl_user where loginAct=? and loginPwd=?
     * 验证失效时间,锁定状态,ip地址
@@ -11,5 +19,10 @@
       2. 回车确认
       3. 验证账号密码,显示错误信息
       4. 使用127.0.0.1访问
+3. 市场活动
+    * tbl_activity 市场活动
+      tbl_activity_remark 市场活动备注
+      一对多的关系
+    * 市场活动添加操作
    
  

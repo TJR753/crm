@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UserDao {
     User login(@Param("loginAct") String loginAct, @Param("loginPwd") String loginPwd);
+    List<User> getUserList();
 }

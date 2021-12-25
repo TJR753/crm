@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -39,5 +40,11 @@ public class UserServiceImpl implements UserService {
             throw new LoginException("当前ip受限");
         }
         return user;
+    }
+
+    @Override
+    public List<User> getUserList() {
+        List<User> userList=userDao.getUserList();
+        return userList;
     }
 }

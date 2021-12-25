@@ -21,4 +21,7 @@
     <select id="login" resultMap="userResultMap">
         select <include refid="userColumnName"/> from tbl_user where loginAct=#{loginAct} and loginPwd=#{loginPwd}
     </select>
+    <select id="getUserList" resultMap="userResultMap">
+        select <include refid="userColumnName"/> from tbl_user
+    </select>
 </mapper>
