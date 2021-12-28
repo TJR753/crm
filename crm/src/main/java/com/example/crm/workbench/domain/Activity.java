@@ -1,4 +1,4 @@
-package com.example.crm.workbench.domian;
+package com.example.crm.workbench.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

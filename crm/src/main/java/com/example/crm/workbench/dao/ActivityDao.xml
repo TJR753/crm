@@ -7,4 +7,50 @@
     <insert id="saveActivity">
         insert into tbl_activity(<include refid="columnName"/>) values(#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy},#{editTime},#{editBy})
     </insert>
+    <select id="getPageList" resultType="activity">
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate from tbl_activity a join tbl_user u on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                u.name like '%' #{owner} '%'
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                a.startDate>#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                a.endDate>#{endTime}
+            </if>
+        </where>
+        order by a.createTime desc
+        limit #{skipCount},#{pageSize}
+
+    </select>
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(*) from tbl_activity a join tbl_user u on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                u.name like '%' #{owner} '%'
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                a.startDate>#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                a.endDate>#{endTime}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteActivity">
+        delete from tbl_activity where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getActivityById" resultType="activity">
+        select <include refid="columnName"/> from tbl_activity where id=#{id}
+    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.example.crm.workbench.domian;
+package com.example.crm.workbench.domain;
 
 public class ActivityRemark {
    private String id;//主键
