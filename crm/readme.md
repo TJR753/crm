@@ -1,3 +1,12 @@
+$.ajax({
+url:"",
+data:"",
+dataType:"",
+type:"get",
+success:function (data){
+
+				}
+			})
 http://127.0.0.1:8080/crm/login.jsp
 1. 关键字
     * add/create：跳转到添加页
@@ -24,6 +33,27 @@ http://127.0.0.1:8080/crm/login.jsp
     * tbl_activity 市场活动
       tbl_activity_remark 市场活动备注
       一对多的关系
-    * 市场活动添加操作
+    * 市场活动的CRUD
+    * 市场活动备注的CRUD
+4. 线索模块
+   * 线索模块相关表
+     tbl_clue 线索表
+     tbl_clue_remark 线索备注表
+     tbl_clue_activity_relation 线索和市场活动关联关系表
+   * 客户模块相关表
+      tbl_customer 客户表
+      tbl_customer_remark 客户备注表
+   * 联系人模块相关表
+      tbl_contacts 联系人相关表
+      tbl_contacts_remark 联系人备注表
+      tbl_contacts_activity_relation 联系人和市场活动关联表
+   * 交易模块相关表
+      tbl_tran 交易表
+      tbl_tran_remark 交易备注表
+      tbl_tran_history 交易历史表
+   * 数据字典
+      tbl_dic_type 字典类型表
+      tbl_dic_value 字典值表
+   服务器缓存+数据字典,使用监听器技术,数据字典按照typeCode进行分类
    
  

@@ -5,6 +5,7 @@ import com.example.crm.utils.GetJson;
 import com.example.crm.workbench.dao.ActivityDao;
 import com.example.crm.workbench.dao.ActivityRemarkDao;
 import com.example.crm.workbench.domain.Activity;
+import com.example.crm.workbench.domain.ActivityRemark;
 import com.example.crm.workbench.domain.vo.PageVo;
 import com.example.crm.workbench.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,54 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity=activityDao.getActivityById(id);
         String time = DateTimeUtil.getSysTime();
         activity.setEditTime(time);
-
         return activity;
+    }
+
+    @Override
+    public boolean updateActivity(Activity activity) {
+        int i=activityDao.updateActivity(activity);
+        if(i==1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Activity getDetail(String id) {
+        Activity activity=activityDao.getDetail(id);
+        return activity;
+    }
+
+    @Override
+    public List<ActivityRemark> getActivityRemarkListById(String id) {
+        List<ActivityRemark> arList=activityRemarkDao.getActivityRemarkListById(id);
+        return arList;
+    }
+
+    @Override
+    public boolean deleteRemarkById(String id) {
+        int i=activityRemarkDao.deleteRemarkById(id);
+        if(i==1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveActivityRemark(ActivityRemark activityRemark) {
+        int i=activityRemarkDao.saveActivityRemark(activityRemark);
+        if(i==1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateRemark(ActivityRemark activityRemark) {
+        int i=activityRemarkDao.updateRemark(activityRemark);
+        if(i==1){
+            return true;
+        }
+        return false;
     }
 }

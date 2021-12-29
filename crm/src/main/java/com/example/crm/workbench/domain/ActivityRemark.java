@@ -1,5 +1,11 @@
 package com.example.crm.workbench.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Data
+@NoArgsConstructor
 public class ActivityRemark {
    private String id;//主键
    private String noteContent;//活动备注

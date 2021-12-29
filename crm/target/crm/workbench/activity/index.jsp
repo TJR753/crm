@@ -22,6 +22,13 @@
 <script type="text/javascript">
 
 	$(function(){
+		/**
+		 * pageList($("#activityPage").bs_pagination('getOption','currentPage'),
+		   $("#activityPage").bs_pagination('getOption','rowsPerPage'))
+		 * $("#activityPage").bs_pagination('getOption','currentPage'),表示当前页
+		 * $("#activityPage").bs_pagination('getOption','rowsPerPage')，表示当前页条数
+		 * */
+		//创建按钮
 		$("#addBtn").click(function (){
 			/*
 			* 时间组件*/
@@ -74,14 +81,15 @@
 						// alert("保存成功")
 						//保存完后清空模态框
 						$("#createActivityForm")[0].reset();
+						//添加后返回第一页，保持条目数
+						pageList(1,$("#activityPage").bs_pagination('getOption','rowsPerPage'))
+						$("#createActivityModal").modal("hide")
+						//保存时间分页刷新
 					}else{
 						alert("保存失败")
 					}
 				}
 			})
-			$("#createActivityModal").modal("hide")
-			//保存时间分页刷新
-			pageList(1,2)
 		})
 		/**
 		 * 分页操作
@@ -108,7 +116,7 @@
 			$("#hidden-owner").val($.trim($("#owner").val()))
 			$("#hidden-startTime").val($.trim($("#startTime").val()))
 			$("#hidden-endTime").val($.trim($("#endTime").val()))
-			pageList(1,2)
+			pageList(1, $("#activityPage").bs_pagination('getOption','rowsPerPage'))
 		})
 		//全选框的实现
 		$("#checkbox").click(function (){
@@ -138,7 +146,6 @@
 						param+="&"
 					}
 				}
-				alert(param)
 				$.ajax({
 					url:"workbench/activity/delete.do",
 					dataType:"json",
@@ -147,7 +154,7 @@
 					success:function (data){
 						if(data.success){
 							//删除完刷新
-							pageList(1,2)
+							pageList(1,$("#activityPage").bs_pagination('getOption','rowsPerPage'))
 						}else{
 							alert("删除失败")
 						}
@@ -211,11 +218,46 @@
 				//显示模态框
 				$("#editActivityModal").modal("show")
 			}
+			/**
+			 * 提供的值：id，owner，name，startDate，endDate,cost,describe
+			 * 返回值：success：true/false
+			 */
 			$("#updateBtn").click(function (){
-				
+				var id=$.trim($("#edit-id").val())
+				var owner=$.trim($("#edit-marketActivityOwner").val())
+				var name=$.trim($("#edit-marketActivityName").val())
+				var startTime=$.trim($("#edit-startTime").val())
+				var endTime=$.trim($("#edit-endTime").val())
+				var cost=$.trim($("#edit-cost").val())
+				var describe=$.trim($("#edit-describe").val())
+				$.ajax({
+					url:"workbench/activity/updateActivity.do",
+					data:{
+						"id":id,
+						"owner":owner,
+						"name":name,
+						"startDate":startTime,
+						"endDate":endTime,
+						"cost":cost,
+						"description":describe,
+						"editBy":"${user.name}",
+					},
+					dataType:"json",
+					type:"post",
+					success:function (data){
+						if(data.success){
+							//修改完后停留在当前页
+							pageList($("#activityPage").bs_pagination('getOption','currentPage'),
+									$("#activityPage").bs_pagination('getOption','rowsPerPage'))
+							$("#editActivityModal").modal("hide")
+						}else{
+							alert("更新失败")
+						}
+					}
+				})
 			})
 		})
-
+		//分页函数
 		function pageList(pageNo,pageSize){
 			//每一次刷新，都将全选框重置
 			$("#checkbox").prop("checked",false)
@@ -241,7 +283,7 @@
 					$.each(data.pageList,function (i,n){
 						html+='<tr class="active">'
 						html+='<td><input type="checkbox" name="checkbox" value="'+n.id+'"/></td>'
-						html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'detail.html\';">'+n.name+'</a></td>'
+						html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/getDetail.do?id='+n.id+'\';">'+n.name+'</a></td>'
 						html+='<td>'+n.owner+'</td>'
 						html+='<td>'+n.startDate+'</td>'
 						html+='<td>'+n.endDate+'</td>'

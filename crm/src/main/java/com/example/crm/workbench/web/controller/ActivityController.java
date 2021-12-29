@@ -5,6 +5,7 @@ import com.example.crm.settings.service.UserService;
 import com.example.crm.utils.DateTimeUtil;
 import com.example.crm.utils.UUIDUtil;
 import com.example.crm.workbench.domain.Activity;
+import com.example.crm.workbench.domain.ActivityRemark;
 import com.example.crm.workbench.domain.vo.PageVo;
 import com.example.crm.workbench.service.ActivityService;
 import com.example.crm.utils.GetJson;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +99,77 @@ public class ActivityController {
         map.put("a",activity);
         map.put("userList",userList);
         String json = GetJson.getJson(map);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping("/workbench/activity/updateActivity.do")
+    public String updateActivity(Activity activity){
+        String editTime = DateTimeUtil.getSysTime();
+        activity.setEditTime(editTime);
+        boolean flag=activityService.updateActivity(activity);
+        String flag1 = GetJson.getFlag(flag);
+        return flag1;
+    }
+
+    @RequestMapping("/workbench/activity/getDetail.do")
+    public void getDetail(String id, HttpServletRequest request, HttpServletResponse response){
+        Activity activity=activityService.getDetail(id);
+        request.setAttribute("a",activity);
+        try {
+            request.getRequestDispatcher("/workbench/activity/detail.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/workbench/activity/getActivityRemarkListById.do")
+    public String getActivityRemarkListById(String id){
+        List<ActivityRemark> arList=activityService.getActivityRemarkListById(id);
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("arList",arList);
+        String json = GetJson.getJson(arList);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping("/workbench/activity/deleteRemarkById.do")
+    public String deleteRemarkById(String id){
+        boolean flag=activityService.deleteRemarkById(id);
+        String flag1 = GetJson.getFlag(flag);
+        return flag1;
+    }
+
+    @ResponseBody
+    @RequestMapping("/workbench/activity/saveRemark.do")
+    public String saveRemark(ActivityRemark activityRemark){
+        String uuid = UUIDUtil.getUUID();
+        activityRemark.setId(uuid);
+        activityRemark.setCreateTime(DateTimeUtil.getSysTime());
+        activityRemark.setEditFlag("0");
+        boolean flag=activityService.saveActivityRemark(activityRemark);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("success",flag);
+        map.put("ar",activityRemark);
+        String json = GetJson.getJson(map);
+        System.out.println(activityRemark);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping("/workbench/activity/updateRemark.do")
+    public String updateRemark(ActivityRemark activityRemark){
+        activityRemark.setEditTime(DateTimeUtil.getSysTime());
+        activityRemark.setEditFlag("1");
+        boolean flag=activityService.updateRemark(activityRemark);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("success",flag);
+        map.put("ar",activityRemark);
+        String json = GetJson.getJson(map);
+        System.out.println(activityRemark);
         return json;
     }
 }

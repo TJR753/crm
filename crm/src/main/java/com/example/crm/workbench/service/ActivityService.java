@@ -1,12 +1,12 @@
 package com.example.crm.workbench.service;
 
 import com.example.crm.workbench.domain.Activity;
+import com.example.crm.workbench.domain.ActivityRemark;
 import com.example.crm.workbench.domain.vo.PageVo;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-
-@Service
+import java.util.List;
 public interface ActivityService {
 
     String saveActivity(Activity activity);
@@ -16,4 +16,16 @@ public interface ActivityService {
     boolean deleteActivity(String[] ids);
 
     Activity getActivityById(String id);
+
+    boolean updateActivity(Activity activity);
+
+    Activity getDetail(String id);
+
+    List<ActivityRemark> getActivityRemarkListById(String id);
+
+    boolean deleteRemarkById(String id);
+
+    boolean saveActivityRemark(ActivityRemark activityRemark);
+
+    boolean updateRemark(ActivityRemark activityRemark);
 }
