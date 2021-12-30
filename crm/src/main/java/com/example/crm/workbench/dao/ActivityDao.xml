@@ -59,4 +59,24 @@
     <select id="getDetail" resultType="activity">
         select a.id,u.name as owner,a.name,a.startDate,a.endDate,a.cost,a.description,a.createTime,a.createBy,a.editTime,a.editBy from tbl_activity a join tbl_user u on a.owner=u.id where a.id=#{id}
     </select>
+    <select id="getActivityListByClueID" resultType="activity">
+        select car.id,u.name as owner,a.name,a.startDate,a.endDate from tbl_activity a join tbl_user u on a.owner=u.id
+        join tbl_clue_activity_relation car on car.activityId=a.id where car.clueId=#{id}
+    </select>
+    <select id="getActivityListAndExcludeClueId" resultType="activity">
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate
+        from tbl_activity a join tbl_user u
+        on a.owner=u.id
+        where a.name like "%" #{searchText} "%"
+        and a.id not in (
+            select activityId from tbl_clue_activity_relation
+            where clueId=#{id}
+        )
+    </select>
+    <select id="getActivityByName" resultType="activity">
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate
+        from tbl_activity a join tbl_user u
+        on a.owner=u.id
+        where a.name like "%" #{searchText} "%"
+    </select>
 </mapper>

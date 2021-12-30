@@ -1,5 +1,8 @@
 package com.example.crm.workbench.domain;
 
+import lombok.Data;
+
+@Data
 public class Tran {
 	
 	private String id;

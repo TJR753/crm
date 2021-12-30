@@ -12,4 +12,8 @@ public interface ClueDao {
     List<User> getUserList();
 
     int saveClue(Clue clue);
+
+    Clue getDetail(String id);
+
+    int deleteById(String clueId);
 }

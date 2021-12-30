@@ -19,4 +19,10 @@ public interface ActivityDao {
     int updateActivity(Activity activity);
 
     Activity getDetail(String id);
+
+    List<Activity> getActivityListByClueID(String id);
+
+    List<Activity> getActivityListAndExcludeClueId(HashMap<String, String> map);
+
+    List<Activity> getActivityByName(String searchText);
 }

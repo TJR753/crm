@@ -83,8 +83,16 @@
 				}
 			})
 		})
+		$("#searchBtn").click(function (){
+			$.ajax({
+				url:"workbench/clue/save.do",
+				dataType:"json",
+				type:"get",
+				success:function (data){
 
-		
+				}
+			})
+		})
 	});
 	
 </script>
@@ -478,7 +486,7 @@
 				    </div>
 				  </div>
 
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
 				  
 				</form>
 			</div>
@@ -508,7 +516,7 @@
 					<tbody>
 						<tr>
 							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">李四先生</a></td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/getDetail.do?id=7aa1c7cb0ad344dc951b4b32454cc11a';">马云先生</a></td>
 							<td>动力节点</td>
 							<td>010-84846003</td>
 							<td>12345678901</td>
@@ -516,16 +524,6 @@
 							<td>zhangsan</td>
 							<td>已联系</td>
 						</tr>
-<%--                        <tr class="active">--%>
-<%--                            <td><input type="checkbox" /></td>--%>
-<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.jsp';">李四先生</a></td>--%>
-<%--                            <td>动力节点</td>--%>
-<%--                            <td>010-84846003</td>--%>
-<%--                            <td>12345678901</td>--%>
-<%--                            <td>广告</td>--%>
-<%--                            <td>zhangsan</td>--%>
-<%--                            <td>已联系</td>--%>
-<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>

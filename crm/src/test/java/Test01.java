@@ -3,6 +3,9 @@ import com.example.crm.settings.domain.User;
 import com.example.crm.workbench.dao.ActivityDao;
 import com.example.crm.workbench.dao.ActivityRemarkDao;
 import com.example.crm.workbench.domain.Activity;
+import com.example.crm.workbench.service.ClueService;
+import com.example.crm.workbench.service.impl.ClueServiceImpl;
+import com.example.crm.workbench.web.controller.ClueController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -105,5 +108,11 @@ public class Test01 {
                 System.out.println(i);
             }
         }
+    }
+    @Test
+    public void test08(){
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ClueService clueServiceImpl = (ClueService) ac.getBean("clueServiceImpl");
+        clueServiceImpl.save();
     }
 }

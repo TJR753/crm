@@ -13,9 +13,9 @@
         <package name="com.example.crm.workbench.domain"/>
     </typeAliases>
 
-    <mappers>
-        <package name="com.example.crm.settings.dao"/>
-        <package name="com.example.crm.workbench.dao"/>
-    </mappers>
+<!--    <mappers>-->
+<!--        <package name="com.example.crm.settings.dao"/>-->
+<!--        <package name="com.example.crm.workbench.dao"/>-->
+<!--    </mappers>-->
 
 </configuration>
