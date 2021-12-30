@@ -4,12 +4,12 @@ data:"",
 dataType:"",
 type:"get",
 success:function (data){
-
+在这里进行修改
 				}
 			})
 http://127.0.0.1:8080/crm/login.jsp
 1. 关键字
-    * add/create：跳转到添加页
+    * add/create：跳转到添加页或者保存操作
     * save：执行添加操作
     * edit：跳转到修改页，或者打开修改的模态窗口
     * update：修改操作
