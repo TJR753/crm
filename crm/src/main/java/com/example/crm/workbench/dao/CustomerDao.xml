@@ -38,6 +38,12 @@
             #{address}
                         )
     </insert>
+    <select id="getCustomer" resultType="string">
+        select name from tbl_customer where name like "%" #{name} "%"
+    </select>
+    <select id="getCustomerId" resultType="string">
+        select id from tbl_customer where name=#{customerName}
+    </select>
 </mapper>
 
 
