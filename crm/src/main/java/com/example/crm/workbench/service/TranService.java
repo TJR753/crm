@@ -5,7 +5,9 @@ import com.example.crm.workbench.domain.Customer;
 import com.example.crm.workbench.domain.Tran;
 import com.example.crm.workbench.domain.TranHistory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface TranService {
     List<User> getUseList();
@@ -17,4 +19,8 @@ public interface TranService {
     Tran getTranById(String id);
 
     List<TranHistory> getTranHistory(String tranId);
+
+    HashMap<String, Object> changeStage(Tran tran);
+
+    Map<String, Object> getChart();
 }

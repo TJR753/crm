@@ -46,6 +46,7 @@
             <tx:method name="login*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="disassociate*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="convertClue*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="changeStage*" propagation="REQUIRED" rollback-for="Exception"/>
         </tx:attributes>
     </tx:advice>
 

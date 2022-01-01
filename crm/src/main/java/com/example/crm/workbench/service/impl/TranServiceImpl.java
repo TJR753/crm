@@ -14,7 +14,9 @@ import com.example.crm.workbench.service.TranService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TranServiceImpl implements TranService {
@@ -96,4 +98,51 @@ public class TranServiceImpl implements TranService {
         List<TranHistory> tranHistoryList=tranHistoryDao.getTranHistory(tranId);
         return tranHistoryList;
     }
+
+    @Override
+    public HashMap<String, Object> changeStage(Tran tran) {
+        //改变交易并保存
+        Tran t = tranDao.getTranById(tran.getId());
+        t.setStage(tran.getStage());
+        t.setEditBy(tran.getEditBy());
+        t.setEditTime(DateTimeUtil.getSysTime());
+        t.setPossibility(tran.getPossibility());
+        int i=tranDao.update(t);
+        boolean success=true;
+        if(i!=1){
+            success=false;
+        }
+        //保存交易历史
+        TranHistory tranHistory = new TranHistory();
+        tranHistory.setId(UUIDUtil.getUUID());
+        tranHistory.setStage(t.getStage());
+        tranHistory.setPossibility(t.getPossibility());
+        tranHistory.setMoney(t.getMoney());
+        tranHistory.setExpectedDate(t.getExpectedDate());
+        tranHistory.setCreateTime(DateTimeUtil.getSysTime());
+        tranHistory.setCreateBy(t.getCreateBy());
+        tranHistory.setTranId(t.getId());
+        i=tranHistoryDao.save(tranHistory);
+        if(i!=1){
+            success=false;
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("success",success);
+        map.put("tran",t);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getChart() {
+        //获得total
+        int total=tranDao.getTotal();
+        //获得List<Map<String,Object>>
+        List<Map<String,Object>> mapList=tranDao.getStageGroup();
+        //放入map
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("tranList",mapList);
+        return map;
+    }
+
 }

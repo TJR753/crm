@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +80,24 @@ public class TranController {
             tranHistory.setPossibility(p);
         }
         String json = GetJson.getJson(tranHistoryList);
+        return json;
+    }
+    @ResponseBody
+    @RequestMapping("/changeStage.do")
+    public String changeStage(Tran tran,HttpServletRequest request){
+        System.out.println(tran);
+        Map<String,String> pmap = (Map<String, String>) request.getServletContext().getAttribute("pmap");
+        String possibility = pmap.get(tran.getStage());
+        tran.setPossibility(possibility);
+        HashMap<String, Object> map=tranService.changeStage(tran);
+        String json = GetJson.getJson(map);
+        return json;
+    }
+    @ResponseBody
+    @RequestMapping("/getChart.do")
+    public String getChart(){
+        Map<String,Object> map=tranService.getChart();
+        String json = GetJson.getJson(map);
         return json;
     }
 }

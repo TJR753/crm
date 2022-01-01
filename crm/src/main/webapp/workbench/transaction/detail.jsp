@@ -153,7 +153,74 @@
 		})
 
 	}
-	
+	//局部刷新页面，保存历史记录
+	function changeStage(stage,i){
+		$.ajax({
+			url:"workbench/transaction/changeStage.do",
+			data:{
+				"stage":stage,
+				"id":"${tran.id}",
+				"editBy":"${user.name}",
+			},
+			dataType:"json",
+			type:"post",
+			success:function (data){
+				if(data.success){
+					$("#stage").html(data.tran.stage)
+					$("#possibility").html(data.tran.possibility)
+					$("editBy").html(data.tran.editBy)
+					$("#editTime").html(data.tran.editTime)
+				}else{
+					alert("更改失败")
+				}
+			}
+		})
+		var point=<%=point%>
+		if(i<point){
+			for(var j=0;j<<%=stageList.size()%>;j++){
+				if(j<i){
+					//绿圈
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-ok-circle mystage")
+					$("#"+j).css("color","#90F790")
+				}else if(j==i){
+					//进行中
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-map-marker mystage")
+					$("#"+j).css("color","#90F790")
+				}else if(j<point){
+					//黑圈
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-record mystage")
+					$("#"+j).css("color","#000000")
+				}else{
+					//黑×
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-remove mystage")
+					$("#"+j).css("color","#000000")
+				}
+			}
+		}else{
+			for(var j=0;j<<%=stageList.size()%>;j++){
+				if(j<point){
+					//黑圈
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-record mystage")
+					$("#"+j).css("color","#000000")
+				}else if(j==i){
+					//红×
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-remove mystage")
+					$("#"+j).css("color","#FF0000")
+				}else{
+					//黑×
+					$("#"+j).removeClass()
+					$("#"+j).addClass("glyphicon glyphicon-remove mystage")
+					$("#"+j).css("color","#000000")
+				}
+			}
+		}
+	}
 	
 </script>
 
@@ -188,7 +255,7 @@
 						//绿圈
 		%>
 
-		<span class="glyphicon glyphicon-ok-circle mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-ok-circle mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #90F790;">
 		</span>
@@ -200,7 +267,7 @@
 		%>
 
 
-		<span class="glyphicon glyphicon-map-marker mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-map-marker mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #90F790;">
 		</span>
@@ -213,7 +280,7 @@
 		%>
 
 
-		<span class="glyphicon glyphicon-record mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-record mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #000000;">
 		</span>
@@ -222,7 +289,7 @@
 					}else{
 						//黑×
 		%>
-		<span class="glyphicon glyphicon-remove mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-remove mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #000000;">
 		</span>
@@ -236,7 +303,7 @@
 					if(i<point){
 						//黑圈
 		%>
-		<span class="glyphicon glyphicon-record mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-record mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #000000;">
 		</span>
@@ -245,7 +312,7 @@
 					}else if(i<index){
 						//黑×
 		%>
-		<span class="glyphicon glyphicon-remove mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-remove mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #000000;">
 		</span>
@@ -254,7 +321,7 @@
 					}else if(i==index){
 						//红×
 		%>
-		<span class="glyphicon glyphicon-remove mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-remove mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #FF0000;">
 		</span>
@@ -263,7 +330,7 @@
 					}else{
 						//黑×
 		%>
-		<span class="glyphicon glyphicon-remove mystage"
+		<span id="<%=i%>" onclick="changeStage('<%=dv.getValue()%>','<%=i%>')" class="glyphicon glyphicon-remove mystage"
 			  data-toggle="popover" data-placement="bottom"
 			  data-content="<%=dv.getText()%>" style="color: #000000;">
 		</span>
@@ -316,7 +383,7 @@
 			<div style="width: 300px; color: gray;">客户名称</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${tran.customerId}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">阶段</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${tran.stage}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="stage">${tran.stage}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
@@ -324,7 +391,7 @@
 			<div style="width: 300px; color: gray;">类型</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${tran.type}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">可能性</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${tran.possibility}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="possibility">${tran.possibility}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
@@ -348,7 +415,7 @@
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 70px;">
 			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${tran.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${tran.editTime}</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b id="editBy">${tran.editBy}&nbsp;&nbsp;</b><small id="editTime" style="font-size: 10px; color: gray;">${tran.editTime}</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 80px;">
